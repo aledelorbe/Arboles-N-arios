@@ -24,10 +24,10 @@ typedef struct _Nodo{
 Nodo *crearNodo(char *d)
 {
 	Nodo *nuevo;
-	nuevo=(Nodo*)malloc(sizeof(Nodo));
-	strcpy(nuevo->dato,d);
-	nuevo->siguiente=NULL;
-	nuevo->son=NULL;
+	nuevo = (Nodo*)malloc(sizeof(Nodo));
+	strcpy(nuevo->dato, d);
+	nuevo->siguiente = NULL;
+	nuevo->son = NULL;
 	return nuevo;
 }
 
@@ -44,7 +44,7 @@ SetConsoleCursorPosition(hCon, Posicion);
 
 
 
-int x=0, y=0, nodales=0;
+int x = 0, y = 0, nodales = 0;
 
 
 
@@ -52,40 +52,40 @@ Nodo *conteoR(Nodo *arbol, Nodo *lista) //La mejor funcion hecha porque no cae e
 {
 	nodales++;
 	//printf("%d",nodales);
-	if(lista->siguiente!=NULL && lista->son!=NULL)
+	if(lista->siguiente != NULL && lista->son != NULL)
 	{
-		Nodo *aux=lista;
-		lista=conteoR(arbol,lista->son);
-		aux=conteoR(arbol,aux->siguiente);
+		Nodo *aux = lista;
+		lista = conteoR(arbol, lista->son);
+		aux = conteoR(arbol, aux->siguiente);
 		return arbol;
 	}
 	
-	if(lista->siguiente!=NULL)
+	if(lista->siguiente != NULL)
 	{
-		lista=conteoR(arbol,lista->siguiente);
+		lista = conteoR(arbol, lista->siguiente);
 		return arbol;
 	}
 		
-	if(lista->son!=NULL)
+	if(lista->son != NULL)
 	{
-		lista=conteoR(arbol,lista->son);
+		lista = conteoR(arbol, lista->son);
 		return arbol;
 	}
 	
-	if(lista->son==NULL && lista->siguiente==NULL) 
+	if(lista->son == NULL && lista->siguiente == NULL) 
 		return arbol;	
 }
 
 
 Nodo *conteo(Nodo *arbol)
 {	
-	if(arbol==NULL)
+	if(arbol == NULL)
 		printf("\nPor el momento el arbol se encuentra vacio.");
 	else
 	{
-		nodales=0;
-		arbol=conteoR(arbol,arbol);
-		//printf("\nLa cantidad de nodos que hay es: %d\n",nodales);
+		nodales = 0;
+		arbol = conteoR(arbol, arbol);
+		//printf("\nLa cantidad de nodos que hay es: %d\n", nodales);
 	}
 		
 	return arbol;
@@ -95,16 +95,16 @@ Nodo *conteo(Nodo *arbol)
 
 Nodo *listarUltimo(Nodo *primero, char *d) 
 {
-	Nodo *nuevo=crearNodo(d);
-	Nodo *aux=primero;
+	Nodo *nuevo = crearNodo(d);
+	Nodo *aux = primero;
 	
-	if(primero==NULL)
+	if(primero == NULL)
 		return nuevo;
 	else
 	{
-		while(aux->siguiente!=NULL)
+		while(aux->siguiente != NULL)
 			aux=aux->siguiente;
-		aux->siguiente=nuevo;	
+		aux->siguiente = nuevo;	
 	}
 	
 	return primero;	
@@ -113,61 +113,61 @@ Nodo *listarUltimo(Nodo *primero, char *d)
 
 Nodo *insertarAR(Nodo *arbol, char *dato, char *dentro, Nodo *lista)
 {		
-	if(lista->siguiente!=NULL && lista->son!=NULL)
+	if(lista->siguiente != NULL && lista->son != NULL)
 	{
-		if( strcmp(lista->dato,dentro )==0 ) 
+		if( strcmp(lista->dato, dentro ) == 0 ) 
 		{
-			lista=listarUltimo(lista->son, dato);
+			lista = listarUltimo(lista->son, dato);
 			return arbol;		
 		}
 		nodales--;
 			
-		Nodo *aux=lista;
-		lista=insertarAR(arbol,dato,dentro,lista->son);
-		aux=insertarAR(arbol,dato,dentro,aux->siguiente);
+		Nodo *aux = lista;
+		lista = insertarAR(arbol, dato, dentro, lista->son);
+		aux = insertarAR(arbol, dato, dentro, aux->siguiente);
 		return arbol;
 	}
 	
-	if(lista->siguiente!=NULL)
+	if(lista->siguiente != NULL)
 	{	
-		if( strcmp(lista->dato,dentro )==0  )
+		if( strcmp(lista->dato, dentro ) == 0  )
 		{
 			Nodo *nuevo=crearNodo(dato);
-			lista->son=nuevo;
+			lista->son = nuevo;
 			return arbol;
 		}
 		nodales--;
 		
-		lista=insertarAR(arbol,dato,dentro,lista->siguiente);
+		lista = insertarAR(arbol, dato, dentro, lista->siguiente);
 		return arbol;
 	}
 			
-	if(lista->son!=NULL)
+	if(lista->son != NULL)
 	{
 		
-		if( strcmp(lista->dato,dentro )==0 ) 
+		if( strcmp(lista->dato, dentro ) == 0 ) 
 		{
 			lista=listarUltimo(lista->son, dato);
 			return arbol;		
 		}
 		nodales--;
 				
-		lista=insertarAR(arbol,dato,dentro,lista->son);
+		lista = insertarAR(arbol, dato, dentro, lista->son);
 		return arbol;
 	}	
 	
-	if(lista->siguiente==NULL && lista->son==NULL)
+	if(lista->siguiente == NULL && lista->son == NULL)
 	{
 	
-		if( strcmp(lista->dato,dentro )==0  )
+		if( strcmp(lista->dato, dentro ) == 0  )
 		{
 			Nodo *nuevo=crearNodo(dato);
-			lista->son=nuevo;
+			lista->son = nuevo;
 			return arbol;
 		}
 		nodales--;
 	
-		if(nodales==0)
+		if(nodales == 0)
 		{
 			printf("\nNo se encontro la carpeta donde deseas crear la carpeta.\n");
 			return arbol;	
@@ -178,127 +178,127 @@ Nodo *insertarAR(Nodo *arbol, char *dato, char *dentro, Nodo *lista)
 
 Nodo *insertarA(Nodo *arbol, char *dato, char *dentro)
 {   
-    if(arbol==NULL)
+    if(arbol == NULL)
 	{
-		Nodo *nuevo=crearNodo(dato);
+		Nodo *nuevo = crearNodo(dato);
 		return nuevo;
 	}  
 	else
 	{
-		arbol=conteo(arbol);
-		arbol=insertarAR(arbol,dato,dentro,arbol); 
+		arbol = conteo(arbol);
+		arbol = insertarAR(arbol, dato, dentro, arbol); 
 		return arbol;	
 	}
 }
 
 
 
-Nodo *desinsertarAR(Nodo *arbol, char *borrar,Nodo *lista) //si lograra fallar poner nodales donde se puso en insertarAR
+Nodo *desinsertarAR(Nodo *arbol, char *borrar, Nodo *lista) //si lograra fallar poner nodales donde se puso en insertarAR
 {
-	//printf("%d",nodales);
+	//printf("%d", nodales);
 	nodales--;
 	
-	if(nodales==0)
+	if(nodales == 0)
 	{
 		printf("\nNo se encontro la carpeta que deseas eliminar.");
 		return arbol;	
 	}	
 	
-	if(lista->siguiente!=NULL && lista->son!=NULL)
+	if(lista->siguiente != NULL && lista->son != NULL)
 	{
-		if( strcmp(lista->son->dato,borrar )==0 && lista->son->siguiente!=NULL )
+		if( strcmp(lista->son->dato, borrar ) == 0 && lista->son->siguiente != NULL )
 		{	
 			Nodo *aux=lista;
-			aux=lista->son;
-			lista->son=lista->son->siguiente;
+			aux = lista->son;
+			lista->son = lista->son->siguiente;
 			free(aux);
 			return arbol;
 		}
-		if( strcmp(lista->son->dato,borrar )==0 && lista->son->siguiente==NULL )
+		if( strcmp(lista->son->dato, borrar ) == 0 && lista->son->siguiente == NULL )
 		{
 			free(lista->son);
-			lista->son=NULL;
+			lista->son = NULL;
 			return arbol;
 		}
 		
 		
-		if( strcmp(lista->siguiente->dato,borrar)==0 && lista->siguiente->siguiente!=NULL)
+		if( strcmp(lista->siguiente->dato, borrar) == 0 && lista->siguiente->siguiente != NULL)
 		{
-			Nodo *aux=lista;
-			aux=lista->siguiente->siguiente;
+			Nodo *aux = lista;
+			aux = lista->siguiente->siguiente;
 			free(aux->siguiente);
-			lista->siguiente=aux;
+			lista->siguiente = aux;
 			return arbol;
 		}	
-		if( strcmp(lista->siguiente->dato,borrar)==0 && lista->siguiente->siguiente==NULL)
+		if( strcmp(lista->siguiente->dato, borrar) == 0 && lista->siguiente->siguiente == NULL)
 		{
 			free(lista->siguiente);
-			lista->siguiente=NULL;
+			lista->siguiente = NULL;
 			return arbol;
 		}
 		
 		
-		Nodo *aux=lista;
-		lista=desinsertarAR(arbol,borrar,lista->son);
-		aux=desinsertarAR(arbol,borrar,aux->siguiente);
+		Nodo *aux = lista;
+		lista = desinsertarAR(arbol, borrar, lista->son);
+		aux = desinsertarAR(arbol, borrar, aux->siguiente);
 		return arbol;
 	}
 	
-	if(lista->siguiente!=NULL)
+	if(lista->siguiente != NULL)
 	{
-		if( strcmp(lista->siguiente->dato,borrar)==0 && lista->siguiente->siguiente!=NULL)
+		if( strcmp(lista->siguiente->dato, borrar) == 0 && lista->siguiente->siguiente != NULL)
 		{
-			Nodo *aux=lista;
-			aux=lista->siguiente->siguiente;
+			Nodo *aux = lista;
+			aux = lista->siguiente->siguiente;
 			free(aux->siguiente);
-			lista->siguiente=aux;
+			lista->siguiente = aux;
 			return arbol;
 		}	
-		if( strcmp(lista->siguiente->dato,borrar)==0 && lista->siguiente->siguiente==NULL)
+		if( strcmp(lista->siguiente->dato, borrar) == 0 && lista->siguiente->siguiente == NULL)
 		{
 			free(lista->siguiente);
-			lista->siguiente=NULL;
+			lista->siguiente = NULL;
 			return arbol;
 		}
 		
-		lista=desinsertarAR(arbol,borrar,lista->siguiente);
+		lista = desinsertarAR(arbol, borrar, lista->siguiente);
 		return arbol;
 	}
 		
-	if(lista->son!=NULL)
+	if(lista->son != NULL)
 	{
-		if( strcmp(lista->son->dato,borrar )==0 && lista->son->siguiente!=NULL )
+		if( strcmp(lista->son->dato, borrar ) == 0 && lista->son->siguiente != NULL )
 		{	
-			Nodo *aux=lista;
-			aux=lista->son;
-			lista->son=lista->son->siguiente;
+			Nodo *aux = lista;
+			aux = lista->son;
+			lista->son = lista->son->siguiente;
 			free(aux);
 			return arbol;
 		}
-		if( strcmp(lista->son->dato,borrar )==0 && lista->son->siguiente==NULL )
+		if( strcmp(lista->son->dato, borrar ) == 0 && lista->son->siguiente == NULL )
 		{
 			free(lista->son);
-			lista->son=NULL;
+			lista->son = NULL;
 			return arbol;
 		}
 		
-		lista=desinsertarAR(arbol,borrar,lista->son);
+		lista = desinsertarAR(arbol, borrar, lista->son);
 		return arbol;
 	}	
 }
 
 
-Nodo *borrarA(Nodo *arbol,char *borrar) 
+Nodo *borrarA(Nodo *arbol, char *borrar) 
 {
-    if(strcmp(arbol->dato,borrar)==0 )
+    if(strcmp(arbol->dato, borrar) == 0 )
     {
     	free(arbol);
-    	arbol=NULL;
+    	arbol = NULL;
 	}	
     else
 	{
-		arbol=conteo(arbol);
-		arbol=desinsertarAR(arbol,borrar,arbol);
+		arbol = conteo(arbol);
+		arbol = desinsertarAR(arbol, borrar, arbol);
 	}		
     	
 	return arbol; 
@@ -308,41 +308,41 @@ Nodo *borrarA(Nodo *arbol,char *borrar)
 
 Nodo *verArbolR(Nodo *arbol, Nodo *lista) 
 {	 
-	gotoxy(x,y);	 
+	gotoxy(x, y);	 
 	printf("%s",lista->dato); 
 	
-	if(lista->siguiente!=NULL && lista->son!=NULL)
+	if(lista->siguiente != NULL && lista->son != NULL)
 	{	
-		Nodo *aux=lista;
+		Nodo *aux = lista;
 		
 		x++,y++;
-		lista=verArbolR(arbol,lista->son);
+		lista = verArbolR(arbol, lista->son);
 		
 		y++;
-		aux=verArbolR(arbol,aux->siguiente);
+		aux = verArbolR(arbol, aux->siguiente);
 		return arbol;
 	}
 	
-	if(lista->siguiente!=NULL)
+	if(lista->siguiente != NULL)
 	{
 		y++;
 		
-		lista=verArbolR(arbol,lista->siguiente); 
+		lista = verArbolR(arbol, lista->siguiente); 
 		return arbol;
 	}
 		
-	if(lista->son!=NULL)
+	if(lista->son != NULL)
 	{
-		x++,y++;
-		lista=verArbolR(arbol,lista->son);
+		x++, y++;
+		lista = verArbolR(arbol, lista->son);
 		
-		if(lista->siguiente==NULL)
+		if(lista->siguiente == NULL)
 			x--;
 			
 		return arbol;
 	}
 	
-	if(lista->son==NULL && lista->siguiente==NULL)
+	if(lista->son == NULL && lista->siguiente == NULL)
 	{
 		x--; 
 		return arbol;
@@ -352,16 +352,16 @@ Nodo *verArbolR(Nodo *arbol, Nodo *lista)
 
 Nodo *verA(Nodo *arbol)
 {   
-    if(arbol==NULL)
+    if(arbol == NULL)
     {
     	printf("\n No hay ninguna carpeta que mostrar.");
     	return arbol;
 	}		
 	else
 	{
-		x++,y++;
-		arbol=verArbolR(arbol,arbol);
-		x=0,y=0;
+		x++, y++;
+		arbol = verArbolR(arbol, arbol);
+		x = 0, y = 0;
 		return arbol;	
 	}
 }
