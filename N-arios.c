@@ -42,7 +42,6 @@ void main()
 				fflush(stdin);	
 				printf("\n\nIngresa el nombre de la carpeta que deseas borrar: ");
 				gets(borrar);
-				
 				arbol = borrarA(arbol, borrar);
 				break;
 				
@@ -55,6 +54,7 @@ void main()
 				free(arbol);
 				printf("\nBye :(");
 				return 0;
+				
 			case 5:
 				arbol = conteo(arbol);
 				break;	
