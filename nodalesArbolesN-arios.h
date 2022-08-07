@@ -1,12 +1,16 @@
-/*cuando uno se cambia de nodos existen 4 casos:
-1-Cuando puedes irte a el hijo principal y cuando puedes irte a el hermano, en este caso se hace recursividad para ir a ambos
-lados, pero antes se evalua lo que se desea realizar ya despues en caso de que no se cumpla lo que se desesa se 
-debe crear otro nodo para que este en el nodo en el que nos encontramos asi uno va abajo y otro a la derecha.
-2-cuando solo puedes irte a el hermano.
-3-Cuando solo puedes irte a el hijo principal.
-4-cuando el nodo es una hoja.
-NOTA: Nunca perder el nodo referencia.
-NOTA2: todo se baso en algoritmo de conteo.
+/*
+	Cuando uno se cambia de nodos existen 4 casos:
+		1-Cuando puedes irte a el hijo principal y cuando puedes irte a el hermano, en este caso se hace recursividad para ir a ambos
+		lados, pero antes se evalua lo que se desea realizar ya despues en caso de que no se cumpla lo que se desesa se 
+		debe crear otro nodo para que este en el nodo en el que nos encontramos asi uno va abajo y otro a la derecha.
+		2-cuando solo puedes irte a el hermano.
+		3-Cuando solo puedes irte a el hijo principal.
+		4-cuando el nodo es una hoja.
+	NOTA: Nunca perder el nodo referencia.
+	NOTA2: todo se baso en algoritmo de conteo.
+	Bitacora 1: 
+		No se han encontrado errores hasta el momento.
+		Se utiliza mucha logica de listas.
 */
 
 #include<stdlib.h>
@@ -276,74 +280,84 @@ Nodo *desinsertarAR(Nodo *arbol, char *borrar, Nodo *lista) //si lograra fallar 
 		
 		// CASOS ELIMINAR HERMANO.
 		// Si el nodo de inmediatamente alado del nodo actual es el solicitado y dos lugares a la derecha sigue habiendo otro hermano entonces...
+		// Estos dos if siguiente probablemente no sean necesarios ya que no se entrarian a estos ifs, si no a los siguietenes dos.
 		if( strcmp(lista->sig->dato, borrar) == 0 && lista->sig->sig != NULL)
 		{
-			// Al nodo actual asignale como hermano el nodo de dos lugares a la derecha y elimina el de inmediatamamente alado
+			// Al nodo actual asignale como hermano el nodo de dos lugares a la derecha y elimina el de inmediatamamente alado.
 			Nodo *aux = lista;
 			aux = lista->sig->sig;
 			free(aux->sig);
 			lista->sig = aux;
 			return arbol;
 		}	
+			// Si el nodo de inmediatamente alado del nodo actual es el solicitado y dos lugares a la derecha no hay otro hermano entonces...
 		if( strcmp(lista->sig->dato, borrar) == 0 && lista->sig->sig == NULL)
 		{
+			// El nodo de la derecha eliminalo y has que el nodo actual a su derecha apunte a la nada.
 			free(lista->sig);
 			lista->sig = NULL;
 			return arbol;
 		}
 		
-		
+		// Se vuelve a mandar a llamar esta funcion pero ahora evaluando al nodo hijo y al nodo hermano.
 		Nodo *aux = lista;
 		lista = desinsertarAR(arbol, borrar, lista->son);
 		aux = desinsertarAR(arbol, borrar, aux->sig);
 		return arbol;
 	}
 	
+	// CASOS ELIMINAR HERMANO.
+	// Si el nodo actual tiene al menos un hermano entonces ...
 	if(lista->sig != NULL)
 	{
+		// Si el nodo de inmediatamente alado es el solicitado y hay otro hermano dos lugares a la derecha entonces...
 		if( strcmp(lista->sig->dato, borrar) == 0 && lista->sig->sig != NULL)
-		{
-			printf("Era este caso");
-			
+		{	
+			// Elimina el nodo siguiente y asignale como hermano al nodo actual, el nodo de dos lugares a la derecha.
 			Nodo *aux = lista, *aux2 = aux->sig->sig;
 			free(aux->sig);
 			aux->sig = aux2;
-				
-//			Nodo *aux = lista;
-//			aux = lista->sig->sig;
-//			free(aux->sig);
-//			lista->sig = aux;
 			return arbol;
 		}	
+		// Si el nodo de inmediatamente alado es el solicitado y NO hay otro hermano dos lugares a la derecha entonces...
 		if( strcmp(lista->sig->dato, borrar) == 0 && lista->sig->sig == NULL)
 		{
-			// printf("o Era este caso");
+			// El nodo de la derecha eliminalo y has que el nodo actual a su derecha apunte a la nada.
 			free(lista->sig);
 			lista->sig = NULL;
 			return arbol;
 		}
 		
+		// Se vuelve a mandar a llamar esta funcion pero ahora evaluando al nodo hermano.
 		lista = desinsertarAR(arbol, borrar, lista->sig);
 		return arbol;
 	}
 		
+	// CASOS ELIMINAR HIJO.
+	// Si el nodo actual tiene un hijo entonces ...
 	if(lista->son != NULL)
 	{
+		// Si el nodo hijo del nodo actual es el solicitado y el nodo hijo tiene un hermano entonces...
 		if( strcmp(lista->son->dato, borrar ) == 0 && lista->son->sig != NULL )
 		{	
+			// Hacer que el nodo hijo del nodo actual sea el hermano del nodo hijo actual.
 			Nodo *aux = lista;
 			aux = lista->son;
 			lista->son = lista->son->sig;
 			free(aux);
 			return arbol;
 		}
+		
+		// Si el nodo hijo del nodo actual es el solicitado y el nodo hijo NO tiene un hermano entonces...
 		if( strcmp(lista->son->dato, borrar ) == 0 && lista->son->sig == NULL )
 		{
+			// Elimina el nodo hijo y has que el nodo actual en su hijo apunta a nada.
 			free(lista->son);
 			lista->son = NULL;
 			return arbol;
 		}
 		
+		// Se vuelve a mandar a llamar esta funcion pero ahora evaluando al nodo hijo.
 		lista = desinsertarAR(arbol, borrar, lista->son);
 		return arbol;
 	}	
@@ -371,17 +385,19 @@ Nodo *borrarA(Nodo *arbol, char *borrar)
 }
 
 
-
+// Funcion que se encarga de ir recorriendo todo el arbol e ir mostrando el contenido de cada nodo.
 Nodo *verArbolR(Nodo *arbol, Nodo *lista) 
 {	 
 	gotoxy(x, y);	 
-	printf("%s",lista->dato); 
+	printf("%s", lista->dato); 
 	
+	// Si el nodo actual tiene un hermano y un hijo entonces...
 	if(lista->sig != NULL && lista->son != NULL)
 	{	
+		// Vuelve a mandar esta funcion pero ahora evaluando al nodo hijo y al nodo hermano.
 		Nodo *aux = lista;
 		
-		x++,y++;
+		x++, y++;
 		lista = verArbolR(arbol, lista->son);
 		
 		y++;
@@ -389,35 +405,44 @@ Nodo *verArbolR(Nodo *arbol, Nodo *lista)
 		return arbol;
 	}
 	
+	// Si el nodo actual tiene un hermano entonces...
 	if(lista->sig != NULL)
 	{
+		// Vuelve a mandar esta funcion pero ahora evaluando al nodo hermano.
 		y++;
 		
 		lista = verArbolR(arbol, lista->sig); 
 		return arbol;
 	}
 		
+	// Si el nodo actual tiene un hijo entonces...
 	if(lista->son != NULL)
 	{
+		// Vuelve a mandar esta funcion pero ahora evaluando al nodo hijo.
 		x++, y++;
 		lista = verArbolR(arbol, lista->son);
 		
+		// Si el nodo actual no tiene hermanos, entonces...
 		if(lista->sig == NULL)
 			x--;
 			
 		return arbol;
 	}
 	
+	// Si el nodo actual no tiene un hermano y no tiene un hijo entonces...
 	if(lista->son == NULL && lista->sig == NULL)
 	{
+		// Significa que estamos en un nodo hoja.
 		x--; 
 		return arbol;
 	} 
 }
 
 
+// Funcion que evalua si se mandara a llamar la funcion: "verArbolR" o no.
 Nodo *verA(Nodo *arbol)
 {   
+	// Si el nodo raiz (arbol) apunta a nada, significa que aun no hay un nodo en el arbol.
     if(arbol == NULL)
     {
     	printf("\n No hay ninguna carpeta que mostrar.");
@@ -425,6 +450,7 @@ Nodo *verA(Nodo *arbol)
 	}		
 	else
 	{
+		// En caso contrario se manda a llamar la funcion verArbolR.
 		x++, y++;
 		arbol = verArbolR(arbol, arbol);
 		x = 0, y = 0;
