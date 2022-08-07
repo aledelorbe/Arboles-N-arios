@@ -39,12 +39,12 @@ Nodo *crearNodo(char *d)
 // Funcion para desplazarnos por la pantalla del cmd.
 void gotoxy(int x, int y)
 {
-HANDLE hCon;
-hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-COORD Posicion;
-Posicion.X = x;
-Posicion.Y = y;
-SetConsoleCursorPosition(hCon, Posicion);
+	HANDLE hCon;
+	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Posicion;
+	Posicion.X = x;
+	Posicion.Y = y;
+	SetConsoleCursorPosition(hCon, Posicion);
 }
 
 
