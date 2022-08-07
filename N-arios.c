@@ -3,7 +3,10 @@
 #include<stdio.h>
 #include "nodalesArbolesN-arios.h"
 
-
+/*
+	Este codigo unicmante contiene un menu que se encarga a mandar a llamar cada una de las funciones 
+	que se encuentran en la libreria de arboles n arios.
+*/
 void main()
 {
 	system("color 4");	
