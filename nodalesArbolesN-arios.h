@@ -303,14 +303,21 @@ Nodo *desinsertarAR(Nodo *arbol, char *borrar, Nodo *lista) //si lograra fallar 
 	{
 		if( strcmp(lista->sig->dato, borrar) == 0 && lista->sig->sig != NULL)
 		{
-			Nodo *aux = lista;
-			aux = lista->sig->sig;
+			printf("Era este caso");
+			
+			Nodo *aux = lista, *aux2 = aux->sig->sig;
 			free(aux->sig);
-			lista->sig = aux;
+			aux->sig = aux2;
+				
+//			Nodo *aux = lista;
+//			aux = lista->sig->sig;
+//			free(aux->sig);
+//			lista->sig = aux;
 			return arbol;
 		}	
 		if( strcmp(lista->sig->dato, borrar) == 0 && lista->sig->sig == NULL)
 		{
+			// printf("o Era este caso");
 			free(lista->sig);
 			lista->sig = NULL;
 			return arbol;
